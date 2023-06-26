@@ -54,3 +54,27 @@ Redis keys are binary safe
 - Try to stick with a schema. For instance "object-type:id" is a good idea, as in "user:1000". Dots or dashes are often used for multi-word fields, as in "comment:4321:reply.to" or "comment:4321:reply-to".
 - The maximum allowed key size is 512 MB.
 
+### Strings
+Since Redis keys are strings, when we use the string type as a value too, we are mapping a string to another string. The string data type is useful for a number of use cases, like caching HTML fragments or pages.
+
+#### SET/GET
+```Redis
+> SET name "Peter"
+OK
+> GET name
+"Peter"
+```
+#### SET NX/XX
+```Redis
+> SET name Peter
+OK
+> GET name
+"Peter"
+> SET name "Conrad" nx // only set the key if it does not already exist
+nil
+
+> SET name "Conrad" xx // only set the key if it already exist
+OK
+> GET name
+"Conrad"
+```
