@@ -131,3 +131,46 @@ string
 > TYPE name
 none
 ```
+
+#### EXPIRE (Key expiration)
+A few important notes about key expiration:
+
+- They can be set both using seconds or milliseconds precision.
+- However the expire time resolution is always 1 millisecond.
+- Information about expires are replicated and persisted on disk, the time virtually passes when your Redis server remains stopped (this means that Redis saves the date at which a key will expire).
+```Redis
+> SET resource:lock "Redis Demo"
+OK
+> EXPIRE resource:lock 5
+(integer) 1
+> TTL resource:lock
+(integer) 4
+> TTL resource:lock
+(integer) 3
+> TTL resource:lock
+(integer) 2
+> TTL resource:lock
+(integer) 1
+> TTL resource:lock
+(integer) 0
+> TTL resource:lock // the key has expired
+(integer) -2
+> GET resource:lock
+(nil)
+
+> SET resource:lock "Redis Demo" EX 5
+OK
+> TTL resource:lock
+(integer) 4
+> PERIST resource:lock // remove the expiration
+(integer) 1
+> TTL resource:lock // the key will never expire
+(integer) -1
+
+> SET resource:lock "Redis Demo" PX 10000
+OK
+> TTL resource:lock
+(integer) 9
+> PTTL resource:lock // get the time to live in milliseconds
+(integer) 8997
+```
