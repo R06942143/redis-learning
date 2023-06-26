@@ -64,7 +64,7 @@ OK
 > GET name
 "Peter"
 ```
-#### SET NX/XX
+#### SET NX/XX (NX: only set the key if it does not already exist, XX: only set the key if it already exist)
 ```Redis
 > SET name Peter
 OK
@@ -77,4 +77,16 @@ nil
 OK
 > GET name
 "Conrad"
+```
+
+#### GETSET (set the new value and return the old value)
+```Redis
+> SET counter 1000
+OK
+> GET counter
+"1000"
+> GETSET counter 2000 // set the new value and return the old value
+"1000"
+> GET counter
+"2000"
 ```
