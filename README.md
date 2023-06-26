@@ -90,3 +90,44 @@ OK
 > GET counter
 "2000"
 ```
+
+#### MGET/MSET (set multiple keys and get multiple keys)
+```Redis
+> MSET key1 "Hello" key2 "World"
+OK
+> MGET key1 key2
+1) "Hello"
+2) "World"
+```
+
+#### EXIST (check if the key exists)
+```Redis
+> SET name "Peter"
+OK
+> EXISTS name
+(integer) 1
+> EXISTS age
+(integer) 0
+```
+
+#### DEL (delete the key)
+```Redis
+> SET name "Peter"
+OK
+> DEL name
+(integer) 1
+> EXISTS name
+(integer) 0
+```
+
+#### TYPE (check the type of the key)
+```Redis
+> SET name "Peter"
+OK
+> TYPE name
+string
+> del name
+(integer) 1
+> TYPE name
+none
+```
